@@ -2,6 +2,8 @@ package com.setiawanpaiman.bakeking.android.di.module;
 
 import com.setiawanpaiman.bakeking.android.http.api.ApiFactory;
 import com.setiawanpaiman.bakeking.android.http.api.RecipeApi;
+import com.setiawanpaiman.bakeking.android.util.scheduler.BaseSchedulerProvider;
+import com.setiawanpaiman.bakeking.android.util.scheduler.SchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -25,5 +27,11 @@ public class ApplicationModule {
     @Singleton
     RecipeApi providesRecipeApi(final ApiFactory apiFactory) {
         return apiFactory.create(RecipeApi.class);
+    }
+
+    @Provides
+    @Singleton
+    BaseSchedulerProvider providesSchedulerProvider() {
+        return SchedulerProvider.getInstance();
     }
 }

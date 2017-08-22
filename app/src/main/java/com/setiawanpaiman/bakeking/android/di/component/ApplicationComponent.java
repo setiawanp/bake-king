@@ -2,6 +2,7 @@ package com.setiawanpaiman.bakeking.android.di.component;
 
 import com.setiawanpaiman.bakeking.android.data.source.RecipeRepository;
 import com.setiawanpaiman.bakeking.android.di.module.ApplicationModule;
+import com.setiawanpaiman.bakeking.android.util.scheduler.BaseSchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -16,4 +17,5 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     RecipeRepository getRecipeRepository();
+    BaseSchedulerProvider getSchedulerProvider();
 }
