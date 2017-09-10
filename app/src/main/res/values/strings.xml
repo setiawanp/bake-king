@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Bake King</string>
     <string name="error_recipe_list">Cannot load recipes</string>
+    <string name="title_recipestep_list">Recipe Steps</string>
+    <string name="recipestep_ingredient_list">Ingredient List:</string>
+    <string name="recipestep_ingredient_item" translatable="false">\n - %s (%s %s)</string>
+    <string name="recipestep_step_item" translatable="false">%d. %s</string>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.setiawanpaiman.bakeking.android.R;
 import com.setiawanpaiman.bakeking.android.data.viewmodel.Recipe;
+import com.setiawanpaiman.bakeking.android.recipedetails.RecipeStepListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +35,12 @@ class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ViewHolde
         ViewHolder vh = new ViewHolder(LayoutInflater.from(mContext)
                 .inflate(R.layout.item_recipe, parent, false));
         vh.itemView.setOnClickListener(v -> {
-            if (vh.getAdapterPosition() == RecyclerView.NO_POSITION) {
+            final int pos = vh.getAdapterPosition();
+            if (pos == RecyclerView.NO_POSITION) {
                 return;
             }
-            // TODO: implement click
+
+            mContext.startActivity(RecipeStepListActivity.newIntent(mContext, mData.get(pos)));
         });
         return vh;
     }
