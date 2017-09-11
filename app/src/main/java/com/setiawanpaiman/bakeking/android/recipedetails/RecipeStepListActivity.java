@@ -16,24 +16,22 @@ import com.setiawanpaiman.bakeking.android.data.viewmodel.Ingredient;
 import com.setiawanpaiman.bakeking.android.data.viewmodel.Recipe;
 import com.setiawanpaiman.bakeking.android.data.viewmodel.Step;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * An activity representing a list of Recipe Steps. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link RecipeStepDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeStepListActivity extends AppCompatActivity {
 
     private static final String EXTRA_RECIPE = RecipeStepListActivity.class.getName() + ".EXTRA_RECIPE";
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.recipestep_list)
+    RecyclerView recyclerView;
+
     private boolean mTwoPane;
 
     public static Intent newIntent(final Context context, final Recipe recipe) {
@@ -45,26 +43,19 @@ public class RecipeStepListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipestep_list);
+        ButterKnife.bind(this);
         setupViews(getIntent().getParcelableExtra(EXTRA_RECIPE));
 
         if (findViewById(R.id.recipestep_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
             mTwoPane = true;
         }
     }
 
     private void setupViews(final Recipe recipe) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(recipe.getName());
         }
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recipestep_list);
-        assert recyclerView != null;
         recyclerView.setAdapter(new Adapter(recipe.getIngredients(), recipe.getSteps()));
     }
 
@@ -94,22 +85,17 @@ public class RecipeStepListActivity extends AppCompatActivity {
                     return;
                 }
 
-                // TODO: implement click
-//                if (mTwoPane) {
-//                    Bundle arguments = new Bundle();
-//                    arguments.putString(RecipeStepDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-//                    RecipeStepDetailFragment fragment = new RecipeStepDetailFragment();
-//                    fragment.setArguments(arguments);
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.recipestep_detail_container, fragment)
-//                            .commit();
-//                } else {
-//                    Context context = v.getContext();
-//                    Intent intent = new Intent(context, RecipeStepDetailActivity.class);
-//                    intent.putExtra(RecipeStepDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-//
-//                    context.startActivity(intent);
-//                }
+                final Step step = mSteps.get(pos - 1);
+                if (mTwoPane) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.recipestep_detail_container,
+                                    RecipeStepDetailFragment.newInstance(step))
+                            .commit();
+                } else {
+                    Context context = v.getContext();
+                    context.startActivity(RecipeStepDetailActivity
+                            .newIntent(context, new ArrayList<>(mSteps), pos - 1));
+                }
             });
             return vh;
         }
@@ -119,7 +105,7 @@ public class RecipeStepListActivity extends AppCompatActivity {
             if (isIngredientPosition(position)) {
                 holder.mContentView.setText(constructIngredientsText(mIngredients));
             } else {
-                holder.mContentView.setText(constructStepText(position, mSteps.get(position - 1)));
+                holder.mContentView.setText(constructStepText(mSteps.get(position - 1)));
             }
         }
 
@@ -143,9 +129,9 @@ public class RecipeStepListActivity extends AppCompatActivity {
             return sb.toString();
         }
 
-        private String constructStepText(final int stepNumber, final Step step) {
+        private String constructStepText(final Step step) {
             return getApplicationContext().getString(R.string.recipestep_step_item,
-                    stepNumber, step.getShortDescription());
+                    step.getId(), step.getShortDescription());
         }
 
         private boolean isIngredientPosition(final int position) {
@@ -153,11 +139,13 @@ public class RecipeStepListActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private final TextView mContentView;
+
+            @BindView(R.id.content)
+            TextView mContentView;
 
             ViewHolder(View view) {
                 super(view);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                ButterKnife.bind(this, view);
             }
         }
     }

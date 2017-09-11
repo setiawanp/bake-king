@@ -1,0 +1,30 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context="com.setiawanpaiman.bakeking.android.recipedetails.RecipeStepDetailFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/player_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:hide_on_touch="true" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:padding="@dimen/spacing_medium"
+            tools:text="Lorem Ipsum Dolor Sit Amet Lorem Ipsum Dolor Sit Amet Lorem Ipsum Dolor Sit Amet" />
+
+    </LinearLayout>
+
+</ScrollView>

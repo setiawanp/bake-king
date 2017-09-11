@@ -38,6 +38,8 @@ dependencies {
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-core-utils:$rootProject.supportLibraryVersion"
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
@@ -48,9 +50,10 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
+    compile("com.google.android.exoplayer:exoplayer:r$rootProject.exoPlayerVersion", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-core-utils'
+    })
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
 }

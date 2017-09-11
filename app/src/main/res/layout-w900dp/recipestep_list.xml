@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    tools:context="com.setiawanpaiman.bakeking.android.recipedetails.RecipeStepListActivity">
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/recipestep_list"
+        android:name="com.setiawanpaiman.bakeking.android.recipedetails.RecipeStepListFragment"
+        android:layout_width="@dimen/item_width"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/spacing_xlarge"
+        android:layout_marginRight="@dimen/spacing_xlarge"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.setiawanpaiman.bakeking.android.recipedetails.RecipeStepListActivity"
+        tools:listitem="@layout/recipestep_list_ingredients" />
+
+    <FrameLayout
+        android:id="@+id/recipestep_detail_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3" />
+
+</LinearLayout>
