@@ -55,6 +55,7 @@ public class RecipeStepListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(recipe.getName());
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         recyclerView.setAdapter(new Adapter(recipe.getIngredients(), recipe.getSteps()));
     }

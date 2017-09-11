@@ -1,9 +1,8 @@
 package com.setiawanpaiman.bakeking.android.recipelist;
 
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.setiawanpaiman.bakeking.android.BakeKingApplication;
@@ -36,7 +35,6 @@ public class RecipeListActivity extends AppCompatActivity
 
         mAdapter = new RecipeListAdapter(this);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         DaggerRecipeListComponent.builder()
                 .applicationComponent(((BakeKingApplication) getApplication()).getApplicationComponent())
