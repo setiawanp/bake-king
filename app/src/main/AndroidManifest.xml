@@ -22,6 +22,11 @@
             android:name=".recipedetails.RecipeStepListActivity"
             android:label="@string/title_recipestep_list"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".recipedetails.RecipeStepDetailActivity"
+            android:label="@string/title_recipestep_detail"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
