@@ -7,4 +7,7 @@
     <string name="recipestep_ingredient_item" translatable="false">\n - %s (%s %s)</string>
     <string name="recipestep_step_item" translatable="false">%d. %s</string>
     <string name="recipestepdetail_tab_title" translatable="false">Step. %d</string>
+    <string name="select_recipe">Select Recipe</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_widget">Add Widget</string>
 </resources>

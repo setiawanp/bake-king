@@ -14,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by Setiawan Paiman on 22/8/17.
  */
 
-class RecipeListPresenter implements BasePresenter {
+public class RecipeListPresenter implements BasePresenter {
 
     private final RecipeListContract.View mView;
     private final RecipeRepository mRecipeRepository;

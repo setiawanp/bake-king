@@ -2,6 +2,7 @@ package com.setiawanpaiman.bakeking.android.recipelist;
 
 import com.setiawanpaiman.bakeking.android.di.component.ApplicationComponent;
 import com.setiawanpaiman.bakeking.android.util.ActivityScoped;
+import com.setiawanpaiman.bakeking.android.widget.RecipeWidgetConfigureActivity;
 
 import dagger.Component;
 
@@ -14,4 +15,6 @@ import dagger.Component;
 public interface RecipeListComponent {
 
     void inject(RecipeListActivity activity);
+
+    void inject(RecipeWidgetConfigureActivity activity);
 }
