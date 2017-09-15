@@ -3,6 +3,7 @@ package com.setiawanpaiman.bakeking.android.recipedetails;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -68,6 +69,7 @@ public class RecipeStepListActivity extends AppCompatActivity {
 
         private final List<Ingredient> mIngredients;
         private final List<Step> mSteps;
+        private int mSelectedPos = -1;
 
         Adapter(final List<Ingredient> ingredients, final List<Step> steps) {
             mIngredients = ingredients;
@@ -89,6 +91,9 @@ public class RecipeStepListActivity extends AppCompatActivity {
 
                 final Step step = mSteps.get(pos - 1);
                 if (mTwoPane) {
+                    notifyItemChanged(mSelectedPos);
+                    mSelectedPos = pos;
+                    notifyItemChanged(mSelectedPos);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.recipestep_detail_container,
                                     RecipeStepDetailFragment.newInstance(step))
@@ -108,6 +113,9 @@ public class RecipeStepListActivity extends AppCompatActivity {
                 holder.mContentView.setText(TextFactory.constructIngredientsText(
                         RecipeStepListActivity.this, mIngredients));
             } else {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(
+                        holder.itemView.getContext(),
+                        mSelectedPos == position ? R.color.colorAccent : android.R.color.white));
                 holder.mContentView.setText(TextFactory.constructStepText(
                         RecipeStepListActivity.this, mSteps.get(position - 1)));
             }
