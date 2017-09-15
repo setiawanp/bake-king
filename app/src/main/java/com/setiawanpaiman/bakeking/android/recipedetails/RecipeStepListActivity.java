@@ -15,6 +15,7 @@ import com.setiawanpaiman.bakeking.android.R;
 import com.setiawanpaiman.bakeking.android.data.viewmodel.Ingredient;
 import com.setiawanpaiman.bakeking.android.data.viewmodel.Recipe;
 import com.setiawanpaiman.bakeking.android.data.viewmodel.Step;
+import com.setiawanpaiman.bakeking.android.util.TextFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,9 +105,11 @@ public class RecipeStepListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             if (isIngredientPosition(position)) {
-                holder.mContentView.setText(constructIngredientsText(mIngredients));
+                holder.mContentView.setText(TextFactory.constructIngredientsText(
+                        RecipeStepListActivity.this, mIngredients));
             } else {
-                holder.mContentView.setText(constructStepText(mSteps.get(position - 1)));
+                holder.mContentView.setText(TextFactory.constructStepText(
+                        RecipeStepListActivity.this, mSteps.get(position - 1)));
             }
         }
 
@@ -118,21 +121,6 @@ public class RecipeStepListActivity extends AppCompatActivity {
         @Override
         public int getItemViewType(int position) {
             return isIngredientPosition(position) ? VIEW_TYPE_INGREDIENTS : VIEW_TYPE_STEPS;
-        }
-
-        private String constructIngredientsText(final List<Ingredient> ingredients) {
-            final Context context = getApplicationContext();
-            StringBuilder sb = new StringBuilder(context.getString(R.string.recipestep_ingredient_list));
-            for (final Ingredient ingredient : ingredients) {
-                sb.append(context.getString(R.string.recipestep_ingredient_item,
-                        ingredient.getIngredient(), ingredient.getQuantity(), ingredient.getMeasure()));
-            }
-            return sb.toString();
-        }
-
-        private String constructStepText(final Step step) {
-            return getApplicationContext().getString(R.string.recipestep_step_item,
-                    step.getId(), step.getShortDescription());
         }
 
         private boolean isIngredientPosition(final int position) {
