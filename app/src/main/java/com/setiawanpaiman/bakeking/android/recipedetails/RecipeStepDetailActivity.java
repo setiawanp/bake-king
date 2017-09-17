@@ -2,6 +2,7 @@ package com.setiawanpaiman.bakeking.android.recipedetails;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.setiawanpaiman.bakeking.android.R;
 import com.setiawanpaiman.bakeking.android.data.viewmodel.Step;
@@ -50,14 +54,15 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (isLandscape) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         mSteps = getIntent().getParcelableArrayListExtra(EXTRA_STEPS);
         setContentView(R.layout.activity_recipestep_detail);
         ButterKnife.bind(this);
-        if (findViewById(R.id.fragment_container) == null) {
-            setupPortraitViews();
-        } else {
-            setupLandscapeViews();
-        }
+        setupViews(isLandscape);
     }
 
     @Override
@@ -70,27 +75,19 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupPortraitViews() {
+    private void setupViews(final boolean isLandscape) {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        if (isLandscape) {
+            toolbar.setVisibility(View.GONE);
+            tabLayout.setVisibility(View.GONE);
         }
 
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(new Adapter(getSupportFragmentManager()));
         viewPager.setCurrentItem(getIntent().getIntExtra(EXTRA_CURRENT_POS, 0));
-    }
-
-    private void setupLandscapeViews() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(RecipeStepDetailFragment.class.getName());
-        if (fragment == null) {
-            final Step step = mSteps.get(getIntent().getIntExtra(EXTRA_CURRENT_POS, 0));
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container,
-                            RecipeStepDetailFragment.newInstance(step),
-                            RecipeStepDetailFragment.class.getName())
-                    .commit();
-        }
     }
 
     private class Adapter extends FragmentStatePagerAdapter {
