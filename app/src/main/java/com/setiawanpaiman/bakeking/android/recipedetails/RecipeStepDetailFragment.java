@@ -127,9 +127,11 @@ public class RecipeStepDetailFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(STATE_PLAY_WHEN_READY, mPlayWhenReady);
-        outState.putLong(STATE_PLAYBACK_POSITION, mPlaybackPosition);
-        outState.putInt(STATE_CURRENT_WINDOW, mCurrentWindow);
+        if (player != null) {
+            outState.putBoolean(STATE_PLAY_WHEN_READY, player.getPlayWhenReady());
+            outState.putLong(STATE_PLAYBACK_POSITION, player.getCurrentPosition());
+            outState.putInt(STATE_CURRENT_WINDOW, player.getCurrentWindowIndex());
+        }
     }
 
     private void setupPlayer() {
@@ -164,9 +166,6 @@ public class RecipeStepDetailFragment extends Fragment {
 
     private void releasePlayer() {
         if (player != null) {
-            mPlaybackPosition = player.getCurrentPosition();
-            mCurrentWindow = player.getCurrentWindowIndex();
-            mPlayWhenReady = player.getPlayWhenReady();
             player.release();
             player = null;
         }
