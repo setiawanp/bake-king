@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -23,6 +24,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.setiawanpaiman.bakeking.android.R;
 import com.setiawanpaiman.bakeking.android.data.viewmodel.Step;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +38,9 @@ public class RecipeStepDetailFragment extends Fragment {
 
     @BindView(R.id.player_view)
     SimpleExoPlayerView playerView;
+
+    @BindView(R.id.thumbnail)
+    ImageView thumbnailView;
 
     @BindView(R.id.description)
     TextView descriptionText;
@@ -75,6 +80,14 @@ public class RecipeStepDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.recipestep_detail, container, false);
         ButterKnife.bind(this, rootView);
         descriptionText.setText(mStep.getDescription());
+        if (!TextUtils.isEmpty(mStep.getThumbnailURL())) {
+            Picasso.with(getActivity())
+                    .load(mStep.getThumbnailURL())
+                    .into(thumbnailView);
+            thumbnailView.setVisibility(View.VISIBLE);
+        } else {
+            thumbnailView.setVisibility(View.GONE);
+        }
         return rootView;
     }
 
