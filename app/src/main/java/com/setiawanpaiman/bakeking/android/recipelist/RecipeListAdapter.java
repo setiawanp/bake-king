@@ -2,14 +2,17 @@ package com.setiawanpaiman.bakeking.android.recipelist;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.setiawanpaiman.bakeking.android.R;
 import com.setiawanpaiman.bakeking.android.data.viewmodel.Recipe;
 import com.setiawanpaiman.bakeking.android.recipedetails.RecipeStepListActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +52,14 @@ class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ViewHolde
     public void onBindViewHolder(ViewHolder holder, int position) {
         Recipe recipe = mData.get(holder.getAdapterPosition());
         holder.textName.setText(recipe.getName());
+        if (!TextUtils.isEmpty(recipe.getImage())) {
+            Picasso.with(mContext)
+                    .load(recipe.getImage())
+                    .into(holder.thumbnailView);
+            holder.thumbnailView.setVisibility(View.VISIBLE);
+        } else {
+            holder.thumbnailView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -66,6 +77,9 @@ class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ViewHolde
 
         @BindView(R.id.name)
         TextView textName;
+
+        @BindView(R.id.thumbnail)
+        ImageView thumbnailView;
 
         ViewHolder(View itemView) {
             super(itemView);
