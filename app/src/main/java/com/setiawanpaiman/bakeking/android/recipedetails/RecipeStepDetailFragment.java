@@ -140,7 +140,7 @@ public class RecipeStepDetailFragment extends Fragment {
 
         Uri uri = Uri.parse(url);
         MediaSource mediaSource = buildMediaSource(uri);
-        player.prepare(mediaSource, true, false);
+        player.prepare(mediaSource, false, false);
     }
 
     private MediaSource buildMediaSource(Uri uri) {
